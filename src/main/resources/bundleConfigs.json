@@ -1,0 +1,43 @@
+{
+  "BundleList": [ {
+    "name": "IMG",
+    "volume": 5,
+    "price": 450.0
+  },
+  {
+    "name": "IMG",
+    "volume": 10,
+    "price": 800.0
+  },
+   {
+    "name": "FLAC",
+    "volume": 3,
+    "price": 427.0
+  },
+  {
+    "name": "FLAC",
+    "volume": 6,
+    "price": 810.0
+  },
+   {
+    "name": "FLAC",
+    "volume": 9,
+    "price": 1147.50
+  },
+  {
+    "name": "VID",
+    "volume": 3,
+    "price": 570.0
+  },
+   {
+    "name": "VID",
+    "volume": 6,
+    "price": 900.0
+  },
+ {
+    "name": "VID",
+    "volume": 9,
+    "price": 1530.0
+  }
+  ]
+}

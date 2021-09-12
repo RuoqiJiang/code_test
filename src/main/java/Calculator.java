@@ -13,12 +13,16 @@ public class Calculator {
     private static final String FLAC = "FLAC";
     private static final String VID = "VID";
 
+    public static void main (String[] args) {
+
+    }
+
     static {
         configs.setImageBundle(
-                        Stream.of(new BundleConfig().setVolume(5).setPrice(450d),
-                                new BundleConfig().setVolume(10).setPrice(800d))
-                                .sorted(Calculator::desc)
-                                .collect(Collectors.toList()))
+                 Stream.of(new BundleConfig().setVolume(5).setPrice(450d),
+                        new BundleConfig().setVolume(10).setPrice(800d))
+                        .sorted(Calculator::desc)
+                        .collect(Collectors.toList()))
                 .setAudioBundle(
                         Stream.of(new BundleConfig().setVolume(3).setPrice(427.5d),
                                 new BundleConfig().setVolume(6).setPrice(810d),
@@ -41,7 +45,6 @@ public class Calculator {
         if (input == null || input.length() == 0) {
             return "no result";
         }
-
         return process(getInputItems(input));
     }
 
@@ -69,23 +72,23 @@ public class Calculator {
         }
     }
 
-    private StringBuilder calculateItem(InputItem inputItem, List<BundleConfig> bundles) {
+    private StringBuilder calculateItem(InputItem inputItem, List<BundleConfig> configBundles) {
         StringBuilder stringBuilder = initString(inputItem);
 
-        List<Integer> volumeList = calculateVolume(inputItem.getVolume(), bundles);
+        List<Integer> volumeList = calculateVolume(inputItem.getVolume(), configBundles);
 
-        return stringBuilder.append(total(volumeList, bundles));
+        return stringBuilder.append(total(volumeList, configBundles));
     }
 
-    private StringBuilder total(List<Integer> volumeList, List<BundleConfig> bundles) {
+    private StringBuilder total(List<Integer> volumeList, List<BundleConfig> configBundles) {
         StringBuilder stringBuilder = new StringBuilder();
         double total = 0;
 
-        for (int i = 0; i < bundles.size(); i++) {
+        for (int i = 0; i < configBundles.size(); i++) {
             if (volumeList.get(i) > 0) {
-                double bundlePrice = volumeList.get(i) * bundles.get(i).getPrice();
+                double bundlePrice = volumeList.get(i) * configBundles.get(i).getPrice();
                 total += bundlePrice;
-                stringBuilder.append(each(volumeList.get(i), bundles.get(i).getVolume(), bundlePrice));
+                stringBuilder.append(each(volumeList.get(i), configBundles.get(i).getVolume(), bundlePrice));
             }
         }
 
@@ -146,5 +149,5 @@ public class Calculator {
         return new InputItem().setItemName(lines[1]).setVolume(Integer.valueOf(lines[0]));
     }
 
-
 }
+

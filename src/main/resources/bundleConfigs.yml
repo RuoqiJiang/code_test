@@ -1,0 +1,16 @@
+imageBundle:
+
+  - {volume: 5, price: 450.0}
+  - {volume: 10, price: 800.0}
+
+audioBundle:
+
+  - {volume: 3, price: 427.50}
+  - {volume: 6, price: 810.0}
+  - {volume: 9, price: 1147.50}
+
+videoBundle:
+
+  - {volume: 3, price: 570.00}
+  - {volume: 6, price: 900.0}
+  - {volume: 9, price: 1530.00}
