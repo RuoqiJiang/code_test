@@ -1,3 +1,6 @@
+import com.logTest.log4j.test.Log4jTest01;
+import com.sun.org.slf4j.internal.Logger;
+import com.sun.org.slf4j.internal.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
 import java.util.ArrayList;
@@ -8,11 +11,12 @@ import java.util.stream.Collectors;
 
 
 public class ConfigReader {
+    public static final Logger log = LoggerFactory.getLogger(Log4jTest01.class);
 
     public static void main(String[] args){
         getConfigs();
     }
-    
+
 
     private final static BundleConfigs EMPTY_BUNDLE = new BundleConfigs()
             .setImageBundle(new ArrayList<>())
@@ -25,9 +29,11 @@ public class ConfigReader {
         try {
             raw = new Yaml().load(ConfigReader.class.getResourceAsStream("/bundleConfigs.yml"));
         } catch (Exception e) {
+            log.error("Reader file error" + e.getMessage());
             return EMPTY_BUNDLE;
         }
         if (raw == null || raw.size() == 0) {
+            log.error("Empty file");
             return EMPTY_BUNDLE;
         }
         return new BundleConfigs()

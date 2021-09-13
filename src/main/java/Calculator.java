@@ -1,14 +1,10 @@
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Calculator {
 
-    private static final BundleConfigs configs = new BundleConfigs();
-
     private static final String LINE_SEPARATOR = "\n";
     private static final String SPACE = " ";
-
     private static final String IMG = "IMG";
     private static final String FLAC = "FLAC";
     private static final String VID = "VID";
@@ -17,25 +13,6 @@ public class Calculator {
 
     }
 
-    static {
-        configs.setImageBundle(
-                 Stream.of(new BundleConfig().setVolume(5).setPrice(450d),
-                        new BundleConfig().setVolume(10).setPrice(800d))
-                        .sorted(Calculator::desc)
-                        .collect(Collectors.toList()))
-                .setAudioBundle(
-                        Stream.of(new BundleConfig().setVolume(3).setPrice(427.5d),
-                                new BundleConfig().setVolume(6).setPrice(810d),
-                                new BundleConfig().setVolume(9).setPrice(1147.5d))
-                                .sorted(Calculator::desc)
-                                .collect(Collectors.toList()))
-                .setVideoBundle(
-                        Stream.of(new BundleConfig().setVolume(3).setPrice(570d),
-                                new BundleConfig().setVolume(5).setPrice(900d),
-                                new BundleConfig().setVolume(9).setPrice(1530d))
-                                .sorted(Calculator::desc)
-                                .collect(Collectors.toList()));
-    }
 
     private static int desc(BundleConfig config1, BundleConfig config2) {
         return config2.getVolume().compareTo(config1.getVolume());
@@ -59,7 +36,9 @@ public class Calculator {
         return stringBuilder.substring(0, stringBuilder.length() - 1);
     }
 
-    private StringBuilder calculateItem(InputItem inputItem) {
+    private String calculateItem(InputItem inputItem) {
+        BundleConfigs configs = ConfigReader.getConfigs();
+
         switch (inputItem.getItemName()) {
             case IMG:
                 return calculateItem(inputItem, configs.getImageBundle());
@@ -72,15 +51,15 @@ public class Calculator {
         }
     }
 
-    private StringBuilder calculateItem(InputItem inputItem, List<BundleConfig> configBundles) {
-        StringBuilder stringBuilder = initString(inputItem);
+    private String calculateItem(InputItem inputItem, List<BundleConfig> configBundles) {
+        String str = initString(inputItem);
 
         List<Integer> volumeList = calculateVolume(inputItem.getVolume(), configBundles);
 
-        return stringBuilder.append(total(volumeList, configBundles));
+        return str + total(volumeList, configBundles);
     }
 
-    private StringBuilder total(List<Integer> volumeList, List<BundleConfig> configBundles) {
+    private String total(List<Integer> volumeList, List<BundleConfig> configBundles) {
         StringBuilder stringBuilder = new StringBuilder();
         double total = 0;
 
@@ -92,18 +71,17 @@ public class Calculator {
             }
         }
 
-        return new StringBuilder().append("$").append(total).append(LINE_SEPARATOR).append(stringBuilder);
+        return "$" + total + LINE_SEPARATOR + stringBuilder;
     }
 
-    private StringBuilder each(int volume, int bundle, double price) {
-        return new StringBuilder()
-                .append("\t")
-                .append(volume)
-                .append(" x ")
-                .append(bundle)
-                .append(" $")
-                .append(price)
-                .append(LINE_SEPARATOR);
+    private String each(int volume, int bundle, double price) {
+        return "\t" +
+                volume +
+                " x " +
+                bundle +
+                " $" +
+                price +
+                LINE_SEPARATOR;
     }
 
     private List<Integer> calculateVolume(int inputVolume, List<BundleConfig> bundles) {
@@ -123,12 +101,11 @@ public class Calculator {
         return volumeList;
     }
 
-    private StringBuilder initString(InputItem inputItem) {
-        return new StringBuilder()
-                .append(inputItem.getVolume())
-                .append(SPACE)
-                .append(inputItem.getItemName())
-                .append(SPACE);
+    private String initString(InputItem inputItem) {
+        return inputItem.getVolume() +
+                SPACE +
+                inputItem.getItemName() +
+                SPACE;
     }
 
     private List<InputItem> getInputItems(String input) {
