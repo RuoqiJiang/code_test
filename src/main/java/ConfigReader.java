@@ -9,14 +9,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-
 public class ConfigReader {
     public static final Logger log = LoggerFactory.getLogger(Log4jTest01.class);
-
-    public static void main(String[] args){
-        getConfigs();
-    }
-
 
     private final static BundleConfigs EMPTY_BUNDLE = new BundleConfigs()
             .setImageBundle(new ArrayList<>())

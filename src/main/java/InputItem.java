@@ -9,9 +9,6 @@ public class InputItem {
 
     private Integer volume;
 
-    /*public InputItem(String itemName,int volume) throws IOException {
-        this.itemName = itemName;
-        this.volume = volume;
-    }*/
+
 
 }
